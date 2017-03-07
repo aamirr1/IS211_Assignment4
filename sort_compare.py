@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Week 4 Assignment 4 part-2"""
+""" Part-2 """
 
 import random
 import time
@@ -9,7 +9,7 @@ import time
 def insertion_sort(exp1):
     """ List of numbers """
     
-    start = time.time()
+    begin = time.time()
     for index in range(1, len(exp1)):
 
         current_value = exp1[index]
@@ -19,24 +19,24 @@ def insertion_sort(exp1):
             exp1[position] = exp1[position - 1]
             position = position - 1
             exp1[position] = current_value
-        end = time.time()
+        last = time.time()
         
-        return exp1, end-start
+        return exp1, last-begin
 
 
 def shell_sort(exp1):
     """ shell_sort function """
     
-    start = time.time()
+    begin = time.time()
     sublist_count = len(exp1) // 2
 
     while sublist_count > 0:
-        for start_position in range(sublist_count):
-            another_insertion_sort(exp1, start_position, sublist_count)
+        for begin_position in range(sublist_count):
+            another_insertion_sort(exp1, begin_position, sublist_count)
         sublist_count = sublist_count // 2
-    end = time.time()
+    last = time.time()
     
-    return exp1, end-start
+    return exp1, last-begin
 
 
 def another_insertion_sort(exp1, exp2, exp4):
@@ -54,11 +54,11 @@ def another_insertion_sort(exp1, exp2, exp4):
 def python_sort(exp1):
     """ pythin_sort function """
     
-    start = time.time()
+    begin = time.time()
     exp1.sort()
-    end = time.time()
+    last = time.time()
     
-    return exp1, end-start
+    return exp1, last-begin
 
 def random_number(exp3):
     """ randon function """
@@ -70,28 +70,28 @@ def random_number(exp3):
 def main():
     """ main function """
     
-    tests = {'test1': 500,
-             'test2': 1000,
-             'test3': 10000}
-    for test in tests.values():
-        random_list = random_number(test)
+    list = {'list1': 500,
+             'list2': 1000,
+             'list3': 10000}
+    for var in list.values():
+        random_list = random_number(var)
         iter_count = 100
-        output = {'insert':0,
-                  'shell':0,
-                  'pyth':0}
+        output = {'insertion':0,
+                  'shell_sort':0,
+                  'python_sort':0}
         while iter_count > 0:
-            output['insert'] += insertion_sort(random_list)[1]
-            output['shell'] += shell_sort(random_list)[1]
-            output['pyth'] += python_sort(random_list)[1]
+            output['insertion'] += insertion_sort(random_list)[1]
+            output['shell_sort'] += shell_sort(random_list)[1]
+            output['python_sort'] += python_sort(random_list)[1]
             iter_count -= 1
 
-        print "List of %s length the test timed:" % test
+        print "List of %s length the var timed:" % var
         print "Insertion Sort took %10.7f seconds to run on average" % \
-              (float(output['insert'] / 100))
+              (float(output['insertion'] / 100))
         print "Shell Sort took %10.7f seconds to run on average" % \
-              (float(output['shell'] / 100))
+              (float(output['shell_sort'] / 100))
         print "Python Sort took %10.7f seconds to run on average" % \
-              (float(output['pyth'] / 100))
+              (float(output['python_sort'] / 100))
         print '\n'
 
 if __name__ == '__main__':

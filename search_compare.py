@@ -1,94 +1,69 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Week 4 Assignment 4 part-1"""
+""" Part-1 """
 
 import random
 import time
 
-
-
 def sequential_search(exp1, exp2):
     """ Search for sequent """
     
-    start = time.time()
-    pos = 0
-    found = False
+    begin = time.time()
+    post = 0
+    result = False
 
-    while pos < len(exp1) and not found:
-        if exp1[pos] == exp2:
-            found = True
+    while post < len(exp1) and not result:
+        if exp1[post] == exp2:
+            result = True
         else:
-            pos = pos + 1
+            post = post + 1
 
-    end = time.time()
-    return found, end-start
+    last = time.time()
+    return result, last-begin
 
 
 def ordered_sequential_search(exp1, exp2):
     """ Search for ordered sequent """
     
-    start = time.time()
-    pos = 0
-    found = False
+    begin = time.time()
+    post = 0
+    result = False
     stop = False
-    while pos < len(exp1) and not found and not stop:
-        if exp1[pos] == exp2:
-            found = True
+    while post < len(exp1) and not result and not stop:
+        if exp1[post] == exp2:
+            result = True
         else:
-            if exp1[pos] > exp2:
+            if exp1[post] > exp2:
                 stop = True
             else:
-                pos = pos+1
+                post = post+1
 
-    end = time.time()
-    return found, end-start
+    last = time.time()
+    return result, last-begin
 
 
 def binary_search_iterative(exp1, exp2):
     """ Search for binary iterative"""
     
-    start = time.time()
+    begin = time.time()
     exp1.sort()
     first = 0
     last = len(exp1) - 1
-    found = False
+    result = False
 
-    while first <= last and not found:
-        midpoint = (first + last) // 2
+    while first <= last and not result:
+        y = (first + last) // 2
 
-        if exp1[midpoint] == exp2:
-            found = True
+        if exp1[y] == exp2:
+            result = True
         else:
-            if exp2 < exp1[midpoint]:
-                last = midpoint - 1
+            if exp2 < exp1[y]:
+                last = y - 1
             else:
-                first = midpoint + 1
+                first = y + 1
 
-    end = time.time()
-    return found, end-start
-
-
-def binary_search_recursive(exp1, exp2):
-    """ Search binary recursive """
-    
-    start = time.time()
-    exp1.sort()
-
-    if len(exp1) == 0:
-        found = False
-    else:
-        midpoint = len(exp1) // 2
-
-        if exp1[midpoint] == exp2:
-            found = True
-        else:
-            if exp2 < exp1[midpoint]:
-                return binary_search_iterative(exp1[:midpoint], exp2)
-            else:
-                return binary_search_iterative(exp1[midpoint + 1:], exp2)
-
-    end = time.time()
-    return found, end-start
+    last = time.time()
+    return result, last-begin
 
 
 def random_gen(exp3):
@@ -98,37 +73,61 @@ def random_gen(exp3):
     return random_list
 
 
+def binary_search_recursive(exp1, exp2):
+    """ Search binary recursive """
+    
+    begin = time.time()
+    exp1.sort()
+
+    if len(exp1) == 0:
+        result = False
+    else:
+        y = len(exp1) // 2
+
+        if exp1[y] == exp2:
+            result = True
+        else:
+            if exp2 < exp1[y]:
+                return binary_search_iterative(exp1[:y], exp2)
+            else:
+                return binary_search_iterative(exp1[y + 1:], exp2)
+
+    last = time.time()
+    return result, last-begin
+
+
+
 def main():
     """ This function returns a full results """
     
-    tests = {'test1': 500,
-             'test2': 1000,
-             'test3': 10000}
+    list = {'list1': 500,
+             'list2': 1000,
+             'list3': 10000}
 
-    for test in tests.values():
-        random_list = random_gen(test)
+    for var in list.values():
+        random_list = random_gen(var)
         iter_count = 100
-        output = {'seq':0,
-                  'ord_seq':0,
-                  'bin_iter':0,
-                  'bin_recur':0}
+        output = {'sequential':0,
+                  'ordered_seq':0,
+                  'binary_seq':0,
+                  'binary_recur':0}
         while iter_count > 0:
-            output['seq'] += sequential_search(random_list, -1)[1]
-            output['ord_seq'] += ordered_sequential_search(random_list, -1)[1]
-            output['bin_iter'] += binary_search_iterative(random_list, -1)[1]
-            output['bin_recur'] += binary_search_recursive(random_list, -1)[1]
+            output['sequential'] += sequential_search(random_list, -1)[1]
+            output['ordered_seq'] += ordered_sequential_search(random_list, -1)[1]
+            output['binary_seq'] += binary_search_iterative(random_list, -1)[1]
+            output['binary_recur'] += binary_search_recursive(random_list, -1)[1]
             iter_count -= 1
 
-        print "List of %s length the test timed:" % test
+        print "List of %s length the test timed:" % var
 
         print "Sequential took %10.7f seconds to run on average" % \
-              (float(output['seq']/ 100))
+              (float(output['sequential']/ 100))
         print "Ordered Seq took %10.7f seconds to run on average" % \
-              (float(output['ord_seq'] / 100))
+              (float(output['ordered_seq'] / 100))
         print "Binary Iter took %10.7f seconds to run on average" % \
-              (float(output['bin_iter']/ 100))
+              (float(output['binary_seq']/ 100))
         print "Binary Recur took %10.7f seconds to run on average" % \
-        (float(output['bin_recur']/ 100))
+        (float(output['binary_recur']/ 100))
         print '\n'
 
 
